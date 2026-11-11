@@ -47,4 +47,4 @@ class Flock:
         distance = self.start_distance + self.elapsed * FLIGHT_SPEED
         center, facing_right = reflected_position(distance, self.left, self.right)
         for bird in self.birds:
-            bird.draw(sheet, center, self.elapsed)
+            bird.draw(sheet, center, self.elapsed, facing_right)
