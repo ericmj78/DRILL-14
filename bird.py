@@ -17,8 +17,9 @@ class Bird:
 
     def draw(self, sheet, center_x, elapsed):
         frame = self.frame_at(elapsed)
+        center_y = self.altitude + (frame.eye_y - frame.height / 2) * SPRITE_SCALE
         sheet.clip_composite_draw(
             frame.left, frame.bottom, frame.width, frame.height,
-            0, '', center_x + self.offset_x, self.altitude,
+            0, '', center_x + self.offset_x, center_y,
             round(frame.width * SPRITE_SCALE), round(frame.height * SPRITE_SCALE),
         )
