@@ -1,3 +1,5 @@
+import game_framework
+
 from bird import Bird, FLAP_PERIOD, SPRITE_SCALE
 from sprite_sheet import CELL_WIDTH
 
@@ -20,11 +22,12 @@ def reflected_position(distance, left, right):
 
 
 class Flock:
-    def __init__(self, width, height):
+    def __init__(self, width, height, sheet):
+        self.sheet = sheet
         self.elapsed = 0.0
         positions = [
             (offset, height * height_ratio)
-            for offsets, height_ratio in zip(ROW_OFFSETS, (0.34, 0.66))
+            for offsets, height_ratio in zip(ROW_OFFSETS, (0.44, 0.70))
             for offset in offsets
         ]
         self.birds = [
@@ -40,11 +43,11 @@ class Flock:
             raise ValueError('Canvas is too narrow for the bird formation.')
         self.start_distance = (self.right - self.left) * 0.15
 
-    def update(self, delta):
-        self.elapsed += delta
+    def update(self):
+        self.elapsed += game_framework.frame_time
 
-    def draw(self, sheet):
+    def draw(self):
         distance = self.start_distance + self.elapsed * FLIGHT_SPEED
         center, facing_right = reflected_position(distance, self.left, self.right)
         for bird in self.birds:
-            bird.draw(sheet, center, self.elapsed, facing_right)
+            bird.draw(self.sheet, center, self.elapsed, facing_right)
